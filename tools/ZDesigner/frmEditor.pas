@@ -25,18 +25,19 @@ unit frmEditor;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, ZClasses, DesignerGui, GLPanel, Vcl.ComCtrls, Vcl.Menus, Vcl.StdCtrls,
-  Vcl.ActnList, Vcl.ImgList, frmSoundEdit, frmCompEditBase, Contnrs,
-  uSymTab, frmMusicEdit, ZLog, Vcl.Buttons, Vcl.StdActns, Vcl.ExtCtrls,
-  Vcl.ToolWin, SynCompletionProposal, frmBitmapEdit, frmMeshEdit, unitPEFile,
-  Vcl.Imaging.Jpeg, Vcl.Themes, ZApplication, GLDrivers, System.Actions,
-  Vcl.Imaging.pngimage, ZBitmap, Generics.Collections, CommCtrl,
-  System.ImageList, frmCustomPropEditBase;
+  WinAPI.Windows, WinAPI.Messages, System.SysUtils, System.Classes,
+  System.Contnrs, System.ImageList, System.Actions, System.Generics.Collections,
+  WinAPI.CommCtrl, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ComCtrls, Vcl.Menus, Vcl.StdCtrls, Vcl.ActnList, Vcl.ImgList,
+  Vcl.Buttons, Vcl.StdActns, Vcl.ExtCtrls, Vcl.ToolWin, Vcl.Imaging.Jpeg,
+  Vcl.Themes, Vcl.Imaging.pngimage, uSymTab, unitPEFile, GLDrivers,
+  DesignerGui, GLPanel, ZApplication, ZBitmap, ZClasses, ZLog,
+  SynCompletionProposal, frmMusicEdit, frmSoundEdit, frmCompEditBase,
+  frmBitmapEdit, frmMeshEdit, frmCustomPropEditBase, frmParamEdit;
 
 type
-  TBuildBinaryKind = (bbNormal,bbNormalUncompressed,bbScreenSaver,bbScreenSaverUncompressed,
-    bbNormalLinux,bbNormalOsx86,bbNormalAndroid);
+  TBuildBinaryKind = (bbNormal, bbNormalUncompressed, bbScreenSaver,
+    bbScreenSaverUncompressed, bbNormalLinux, bbNormalOsx86, bbNormalAndroid);
 
   TPropEditKey = record
     Comp : TZComponent;
@@ -238,6 +239,8 @@ type
     EnableFunctionInlining: TMenuItem;
     OpenAllProjectsMenuItem: TMenuItem;
     EvalEdit: TEdit;
+    N18: TMenuItem;
+    ParameterEditMenuItem: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SaveBinaryMenuItemClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -328,6 +331,7 @@ type
     procedure OpenAllProjectsMenuItemClick(Sender: TObject);
     procedure EvalEditKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure ParameterEditMenuItemClick(Sender: TObject);
   private
     { Private declarations }
     Ed : TZPropertiesEditor;
@@ -344,19 +348,20 @@ type
     _FileChanged : boolean;
     RenderAborted : boolean;
     MruList : TStringList;
-    PackerProg,PackerParams : string;
-    AndroidSdkPath,AndroidSdCardPath,AndroidAntPath,
-    AndroidKeystorePath,AndroidKeystoreAlias : string;
+    PackerProg, PackerParams : string;
+    AndroidSdkPath, AndroidSdCardPath, AndroidAntPath,
+    AndroidKeystorePath, AndroidKeystoreAlias : string;
     GuiLayout : integer;
-    UndoNodes,UndoIndices : TObjectList;
+    UndoNodes, UndoIndices : TObjectList;
     UndoParent : TZComponentTreeNode;
     SysLibrary : TZComponent;
-    SynEditFontSize,AutoCompTimerInterval : integer;
+    SynEditFontSize, AutoCompTimerInterval : integer;
     Log : TLog;
-    DetachedCompEditors : TObjectDictionary<TZComponent,TForm>;
-    DetachedPropEditors : TObjectDictionary<TPropEditKey,TForm>;
+    DetachedCompEditors : TObjectDictionary<TZComponent, TForm>;
+    DetachedPropEditors : TObjectDictionary<TPropEditKey, TForm>;
     MainScaling : integer;
     EvalHistory : TStringList;
+    ParamEditForm: TParamEditForm;
     procedure SelectComponent(C : TZComponent);
     procedure DrawModel;
     procedure OnGlDraw(Sender : TObject);
@@ -462,13 +467,25 @@ implementation
 
 {$R *.dfm}
 
-uses Math, ZOpenGL, BitmapProducers, Meshes, Renderer, Compiler, ZExpressions,
-  ShellApi, SynEditHighlighter, SynHighlighterZc,frmSelectComponent, AudioComponents, IniFiles, ZPlatform,
-  dmCommon, frmAbout, uHelp, frmToolMissing, Vcl.Clipbrd, unitResourceDetails,
-  u3dsFile, AudioPlayer, frmSettings, unitResourceGraphics, Zc_Ops,
-  SynEditTypes, SynEditSearch, frmXmlEdit, frmArrayEdit, System.Types, System.IOUtils,
-  frmAndroidApk, Winapi.Imm, Vcl.ExtDlgs, frmSpriteSheetEdit, frmTileSetEdit,
-  frmExprPropEdit, frmShaderPropEdit, frmFloatPropEdit, SynEdit, uObjFile;
+uses
+  (* System *)
+  System.Math, System.Types, System.IOUtils, WinApi.ShellApi, Winapi.Imm,
+  Vcl.ExtDlgs, System.IniFiles, Vcl.Clipbrd,
+
+  (* SynEdit *)
+  SynEdit, SynEditTypes, SynEditSearch, SynEditHighlighter, SynHighlighterZc,
+
+  (* ZGE *)
+  BitmapProducers, Meshes,
+  Renderer, Compiler, AudioComponents, AudioPlayer, u3dsFile, uObjFile,
+  ZPlatform, ZOpenGL, ZExpressions, Zc_Ops, uHelp,
+  unitResourceDetails,
+  unitResourceGraphics,
+
+  (* Designer *)
+  dmCommon, frmAbout, frmToolMissing, frmSettings, frmSelectComponent,
+  frmXmlEdit, frmArrayEdit, frmAndroidApk, frmSpriteSheetEdit, frmTileSetEdit,
+  frmExprPropEdit, frmShaderPropEdit, frmFloatPropEdit;
 
 { TEditorForm }
 
@@ -519,7 +536,7 @@ begin
   inherited Create(AOwner);
   ZLog.SetReceiverFunc(OnReceiveLogMessage);
 
-  Math.SetExceptionMask(exAllArithmeticExceptions);
+  System.Math.SetExceptionMask(exAllArithmeticExceptions);
 
   Self.Log := ZLog.GetLog(Self.ClassName);
   Log.Write( IntToStr(SizeOf(Pointer)*8) + ' bit version' );
@@ -894,6 +911,10 @@ begin
   Tree.Items[0].Selected := True;  //Select "App" component as default
   //After scaling, hscroll position is sometimes not left 0
   Tree.Perform(WM_HSCROLL, MakeWParam(SB_PAGELEFT, 0), 0);
+
+  // eventually update parameter editor
+  if Assigned(ParamEditForm) then
+    ParamEditForm.UpdateParameters(ZApp.Content);
 end;
 
 function TEditorForm.OnGetLibraryPath : string;
@@ -4387,6 +4408,21 @@ begin
     end;
     Dec(I);
   end;
+end;
+
+procedure TEditorForm.ParameterEditMenuItemClick(Sender: TObject);
+begin
+  if not Assigned(ParamEditForm) then
+    ParamEditForm := TParamEditForm.Create(Self);
+
+  ParamEditForm.UpdateParameters(ZApp.Content);
+
+  if TMenuItem(Sender).Checked then
+    ParamEditForm.Hide
+  else
+    ParamEditForm.Show;
+
+  TMenuItem(Sender).Checked := ParamEditForm.Visible;
 end;
 
 procedure TEditorForm.ParseEvalExpression(const Expr: string);

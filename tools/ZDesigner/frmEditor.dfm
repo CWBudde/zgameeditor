@@ -276,7 +276,7 @@ object EditorForm: TEditorForm
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
-        ActivePage = ViewerGlTabSheet
+        ActivePage = ViewerBlankTabSheet
         Align = alClient
         TabOrder = 0
         object ViewerGlTabSheet: TTabSheet
@@ -592,10 +592,6 @@ object EditorForm: TEditorForm
           Margins.Bottom = 4
           ImageIndex = 1
           TabVisible = False
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel1: TPanel
             Left = 0
             Top = 0
@@ -631,10 +627,6 @@ object EditorForm: TEditorForm
           Margins.Bottom = 4
           ImageIndex = 3
           TabVisible = False
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
       end
     end
@@ -760,19 +752,19 @@ object EditorForm: TEditorForm
   end
   object SaveDialog: TSaveDialog
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
-    Left = 48
-    Top = 40
+    Left = 64
+    Top = 64
   end
   object Timer1: TTimer
     Interval = 30
     OnTimer = Timer1Timer
-    Left = 88
-    Top = 40
+    Left = 64
+    Top = 496
   end
   object ActionList1: TActionList
     Images = ActionImageList
-    Left = 48
-    Top = 128
+    Left = 64
+    Top = 160
     object AddComponentAction: TAction
       Caption = 'Add component'
       Hint = 'Add component'
@@ -1020,8 +1012,8 @@ object EditorForm: TEditorForm
   end
   object TreePopupMenu: TPopupMenu
     Images = ActionImageList
-    Left = 168
-    Top = 40
+    Left = 64
+    Top = 352
     object Addcomponent2: TMenuItem
       Action = AddComponentAction
     end
@@ -1081,10 +1073,10 @@ object EditorForm: TEditorForm
   end
   object ActionImageList: TImageList
     ColorDepth = cd32Bit
-    Left = 208
-    Top = 96
+    Left = 64
+    Top = 256
     Bitmap = {
-      494C01010F0018000C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C01010F001800180010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1602,8 +1594,8 @@ object EditorForm: TEditorForm
   end
   object MainMenu1: TMainMenu
     Images = ActionImageList
-    Left = 40
-    Top = 88
+    Left = 64
+    Top = 112
     object File1: TMenuItem
       Caption = '&File'
       object NewProjectMenuItem: TMenuItem
@@ -1747,6 +1739,13 @@ object EditorForm: TEditorForm
       object N11: TMenuItem
         Caption = '-'
       end
+      object ParameterEditMenuItem: TMenuItem
+        Caption = 'Parameter Edit'
+        OnClick = ParameterEditMenuItemClick
+      end
+      object N18: TMenuItem
+        Caption = '-'
+      end
       object N10: TMenuItem
         Action = ShowCompilerDetailsAction
       end
@@ -1793,10 +1792,10 @@ object EditorForm: TEditorForm
   end
   object ActionDisabledImageList: TImageList
     ColorDepth = cd32Bit
-    Left = 208
-    Top = 152
+    Left = 64
+    Top = 304
     Bitmap = {
-      494C01010C0018000C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C01010C001800180010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2313,8 +2312,8 @@ object EditorForm: TEditorForm
       000000000000000000000000000000000000}
   end
   object LogPopupMenu: TPopupMenu
-    Left = 40
-    Top = 312
+    Left = 64
+    Top = 400
     object LogCopytoclipboardMenuItem: TMenuItem
       Caption = 'Copy to clipboard'
       OnClick = LogCopytoclipboardMenuItemClick
@@ -2332,12 +2331,12 @@ object EditorForm: TEditorForm
     DefaultExt = '*.vsf'
     Filter = 'Style (*.vsf)|*.vsf'
     Title = 'Open style'
-    Left = 56
-    Top = 368
+    Left = 64
+    Top = 448
   end
   object HighDPIImageListContainer: TImageList
     ColorDepth = cd32Bit
-    Left = 56
+    Left = 64
     Top = 208
   end
 end
