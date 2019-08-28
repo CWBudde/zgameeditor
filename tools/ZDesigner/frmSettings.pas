@@ -3,8 +3,9 @@ unit frmSettings;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ComCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ComCtrls;
 
 type
   TSettingsForm = class(TForm)
@@ -50,17 +51,15 @@ type
     procedure OkButtonClick(Sender: TObject);
     procedure PackerPresetComboChange(Sender: TObject);
   private
-    { Private declarations }
     ShellChanged : boolean;
     procedure ReadSettings;
     procedure SaveSettings;
-  public
-    { Public declarations }
   end;
 
 implementation
 
-uses frmEditor, Registry;
+uses
+  System.Win.Registry, frmEditor;
 
 {$R *.DFM}
 

@@ -3,8 +3,9 @@ unit frmModulationFrame;
 interface
 
 uses 
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ComCtrls, AudioPlayer;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ComCtrls, AudioPlayer;
 
 type
   TModulationFrame = class(TFrame)
@@ -19,10 +20,8 @@ type
     procedure SourceComboBoxChange(Sender: TObject);
     procedure DestComboBoxChange(Sender: TObject);
   private
-    { Private declarations }
     Modulation : PModulation;
   public
-    { Public declarations }
     procedure SetModulation(M : PModulation);
   end;
 

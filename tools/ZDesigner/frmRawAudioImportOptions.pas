@@ -3,8 +3,8 @@ unit frmRawAudioImportOptions;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.StdCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
   TImportRawAudioForm = class(TForm)
@@ -15,10 +15,6 @@ type
     Button1: TButton;
     Button2: TButton;
     procedure FormCreate(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
   end;
 
 var

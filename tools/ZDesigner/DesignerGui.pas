@@ -22,8 +22,9 @@ unit DesignerGui;
 
 interface
 
-uses Vcl.Controls,Classes,Vcl.ExtCtrls,ZClasses,Vcl.ComCtrls,Contnrs,Vcl.Forms,Vcl.Menus,Vcl.Graphics,
-  Winapi.Windows, BitmapProducers;
+uses
+  System.Classes, System.Contnrs, Vcl.Controls, Vcl.ExtCtrls, Vcl.ComCtrls,
+  Vcl.Forms, Vcl.Menus, Vcl.Graphics, Winapi.Windows, ZClasses, BitmapProducers;
 
 type
   TPropValueChangedEvent = procedure of object;

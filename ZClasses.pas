@@ -27,7 +27,8 @@ unit ZClasses;
 interface
 
 {$ifndef minimal}
-uses uSymTab,Contnrs,Classes,Generics.Collections;
+uses
+  uSymTab, Contnrs, Classes, Generics.Collections;
 {$endif}
 
 type
@@ -648,7 +649,7 @@ var
 
 implementation
 
-uses ZMath,ZLog, ZPlatform, ZApplication, ZExpressions
+uses ZMath, ZLog, ZPlatform, ZApplication, ZExpressions
   {$ifndef minimal},LibXmlParser,{$ifndef fpc}AnsiStrings,{$endif}SysUtils,Math,zlib
   ,Zc_Ops
   {$endif}

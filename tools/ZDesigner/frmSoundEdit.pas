@@ -3,8 +3,10 @@ unit frmSoundEdit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, frmCompEditBase,
-  Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Samples.Spin, ZClasses, DesignerGUI, AudioComponents;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Samples.Spin,
+  ZClasses, DesignerGUI, AudioComponents, frmCompEditBase;
 
 type
   TSoundEditFrame = class(TCompEditFrameBase)
@@ -91,7 +93,6 @@ type
     procedure SetupMixerGui;
     procedure GetNoteNr(I: Integer; var NoteNr: Single);
     procedure WriteToComponent;
-    { Private declarations }
   public
     procedure SetComponent(C: TZComponent; TreeNode: TZComponentTreeNode);  override;
     procedure OnKeyPress(var Key: Char); override;
@@ -99,15 +100,14 @@ type
     procedure OnEditorClose; override;
   end;
 
-var
-  SoundEditFrame: TSoundEditFrame;
-
 implementation
 
 {$R *.dfm}
 
-uses MMSystem, AudioPlayer, frmModulationFrame,frmLfoFrame,frmChannelFrame,
-  frmEnvelopeFrame,ZPlatform,Math, uHelp, System.Types, Vcl.Clipbrd;
+uses
+  WinApi.MMSystem, System.Math, System.Types, Vcl.Clipbrd, AudioPlayer,
+  frmModulationFrame, frmLfoFrame, frmChannelFrame, frmEnvelopeFrame,
+  ZPlatform, uHelp;
 
 const
   NoteKeys : string = 'awsedftgyhuj';

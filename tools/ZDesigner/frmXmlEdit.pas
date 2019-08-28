@@ -3,8 +3,9 @@ unit frmXmlEdit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.StdCtrls, SynEdit, Vcl.ExtCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ExtCtrls, SynEdit;
 
 type
   TXmlEditForm = class(TForm)
@@ -12,10 +13,7 @@ type
     OkButton: TButton;
     Button2: TButton;
     procedure FormCreate(Sender: TObject);
-  private
-    { Private declarations }
   public
-    { Public declarations }
     SynEdit : TSynEdit;
   end;
 

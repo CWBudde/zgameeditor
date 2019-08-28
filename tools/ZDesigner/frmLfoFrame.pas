@@ -3,8 +3,9 @@ unit frmLfoFrame;
 interface
 
 uses 
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, AudioPlayer,
-  Vcl.ComCtrls, Vcl.StdCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
+  Vcl.StdCtrls, AudioPlayer;
 
 type
   TLfoFrame = class(TFrame)
@@ -19,10 +20,8 @@ type
     procedure SpeedTrackBarChange(Sender: TObject);
     procedure BipolarCheckBoxClick(Sender: TObject);
   private
-    { Private declarations }
     Lfo : PLfo;
   public
-    { Public declarations }
     procedure SetLfo(L : PLfo);
   end;
 
@@ -30,7 +29,8 @@ implementation
 
 {$R *.dfm}
 
-uses DesignerGUI,TypInfo;
+uses
+  DesignerGUI, TypInfo;
 
 
 procedure TLfoFrame.ActiveCheckBoxClick(Sender: TObject);

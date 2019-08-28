@@ -23,8 +23,9 @@ unit frm3dsImportOptions;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ComCtrls;
 
 type
   TImport3dsForm = class(TForm)
@@ -48,10 +49,7 @@ type
     procedure NamePrefixEditChange(Sender: TObject);
     procedure AutoScaleCheckBoxClick(Sender: TObject);
     procedure DownloadURLLabelClick(Sender: TObject);
-  private
-    { Private declarations }
   public
-    { Public declarations }
     function GetValidatedName(const S : string) : string;
   end;
 

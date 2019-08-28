@@ -221,11 +221,12 @@ var
 
 implementation
 
-uses ZPlatform,ZLog,AudioPlayer,ZMath,ZOpenGL
+uses
+  ZPlatform, ZLog, ZMath, ZOpenGL, AudioPlayer
   {$ifndef minimal}
-  ,ZExpressions,SysUtils,Zc_Ops,Classes,Compiler
+  , ZExpressions, SysUtils, Zc_Ops, Classes, Compiler
   {$else}
-  ,Renderer
+  , Renderer
   {$endif}
   ;
 

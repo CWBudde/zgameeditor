@@ -3,9 +3,9 @@ unit frmExprPropEdit;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, frmCustomPropEditBase, Vcl.StdCtrls,
-  SynEdit, SynCompletionProposal, Vcl.ExtCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, SynEdit, SynCompletionProposal, frmCustomPropEditBase;
 
 type
   TExprPropEditForm = class(TCustomPropEditBaseForm)
@@ -37,11 +37,12 @@ implementation
 
 {$R *.dfm}
 
-uses dmCommon, SynHighlighterZc, SynEditSearch;
+uses
+  dmCommon, SynHighlighterZc, SynEditSearch;
 
 procedure TExprPropEditForm.ExprHelpButtonClick(Sender: TObject);
 begin
-  HtmlHelp(0,Application.HelpFile + '::/ScriptingLanguage.html', HH_DISPLAY_TOPIC, 0);
+  HtmlHelp(0, Application.HelpFile + '::/ScriptingLanguage.html', HH_DISPLAY_TOPIC, 0);
 end;
 
 procedure TExprPropEditForm.FormCreate(Sender: TObject);

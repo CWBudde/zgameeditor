@@ -3,8 +3,8 @@ unit frmToolMissing;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.StdCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
   TToolMissingForm = class(TForm)
@@ -20,10 +20,6 @@ type
     procedure DownloadURLLabelClick(Sender: TObject);
     procedure ToolPathLabelMouseEnter(Sender: TObject);
     procedure ToolPathLabelMouseLeave(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
   end;
 
 var

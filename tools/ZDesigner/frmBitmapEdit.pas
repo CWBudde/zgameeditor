@@ -3,9 +3,10 @@ unit frmBitmapEdit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, frmCompEditBase, Vcl.ExtCtrls, ZClasses,DesignerGui, Contnrs, ZBitmap,
-  Vcl.Menus, Vcl.StdCtrls,GlPanel;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Contnrs,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls, ZClasses,
+  DesignerGui, ZBitmap, GlPanel, frmCompEditBase;
 
 type
   TBitmapEditFrame = class(TCompEditFrameBase)
@@ -37,7 +38,6 @@ type
     procedure PreviewMenuItemClick(Sender: TObject);
     procedure SaveToFileButtonClick(Sender: TObject);
   private
-    { Private declarations }
     Nodes : TObjectList;
     Bitmap : TZBitmap;
     IsBitmapConnected : boolean;
@@ -56,7 +56,6 @@ type
     procedure Layout;
     procedure OnGlDraw(Sender: TObject);
   public
-    { Public declarations }
     constructor Create(AOwner: TComponent) ; override;
     destructor Destroy; override;
     procedure SetComponent(C : TZComponent; TreeNode : TZComponentTreeNode); override;
@@ -70,8 +69,9 @@ var
 
 implementation
 
-uses Meshes, Math, SugiyamaLayout, ZLog, frmEditor, BitmapProducers, Vcl.ExtDlgs,
-  System.Types, OpenGL12, Renderer, ZOpenGL;
+uses
+  System.Math, System.Types, Vcl.ExtDlgs, Meshes, SugiyamaLayout,
+  BitmapProducers, OpenGL12, Renderer, ZLog, ZOpenGL, frmEditor;
 
 {$R *.dfm}
 

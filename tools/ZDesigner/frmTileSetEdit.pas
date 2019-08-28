@@ -3,9 +3,9 @@ unit frmTileSetEdit;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, frmScriptedCompEditBase, Vcl.ExtCtrls, Renderer,
-  Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Renderer, frmScriptedCompEditBase;
 
 type
   TTileSetEditFrame = class(TScriptedCompEditFrameBase)
@@ -16,7 +16,6 @@ type
     procedure BindData; override;
     procedure UpdateData; override;
   public
-    { Public declarations }
     constructor Create(AOwner: TComponent) ; override;
   end;
 

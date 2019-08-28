@@ -3,8 +3,9 @@ unit frmArrayEdit;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs,ZExpressions, Vcl.Grids, Vcl.StdCtrls, ZClasses, Vcl.ComCtrls;
+  Winapi.Windows, Winapi.Messages, SysUtils, Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls, Vcl.ComCtrls,
+  ZExpressions, ZClasses;
 
 type
   TArrayEditForm = class(TForm)
@@ -21,14 +22,12 @@ type
     procedure PasteAllButtonClick(Sender: TObject);
     procedure OkButtonClick(Sender: TObject);
   private
-    { Private declarations }
     TheArray : TDefineArray;
     Index3 : integer;
     function ValueAsText(P : pointer) : string;
     procedure SetValueFromText(const S: String; P: pointer);
     procedure ReadFromArray;
   public
-    { Public declarations }
     procedure SetArray(A : TDefineArray);
   end;
 
@@ -39,7 +38,8 @@ implementation
 
 {$R *.dfm}
 
-uses DesignerGUI,Vcl.Clipbrd;
+uses
+  Vcl.Clipbrd, DesignerGUI;
 
 { TArrayEditForm }
 

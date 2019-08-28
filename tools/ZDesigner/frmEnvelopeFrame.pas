@@ -3,8 +3,9 @@ unit frmEnvelopeFrame;
 interface
 
 uses 
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ComCtrls, Vcl.StdCtrls, AudioPlayer, Vcl.ExtCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
+  Vcl.StdCtrls, Vcl.ExtCtrls, AudioPlayer;
 
 type
   TEnvelopeFrame = class(TFrame)
@@ -27,11 +28,9 @@ type
     procedure TrackBarContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
   private
-    { Private declarations }
     Envelope : PEnvelope;
     procedure Draw;
   public
-    { Public declarations }
     procedure SetEnvelope(E : PEnvelope);
   end;
 

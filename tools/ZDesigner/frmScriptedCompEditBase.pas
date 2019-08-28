@@ -3,9 +3,10 @@ unit frmScriptedCompEditBase;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, frmCompEditBase, GLPanel, ZClasses, DesignerGui,
-  ZApplication, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, frmCompEditBase, GLPanel, ZClasses, DesignerGui,
+  ZApplication;
 
 type
   TScriptedCompEditFrameBase = class(TCompEditFrameBase)
@@ -14,7 +15,6 @@ type
     InfoLabel: TLabel;
     procedure HelpButtonClick(Sender: TObject);
   private
-    { Private declarations }
     procedure OnBindData(Sender : TObject);
     procedure OnUpdateData(Sender : TObject);
   protected
@@ -29,7 +29,8 @@ type
 
 implementation
 
-uses frmEditor, ZPlatform;
+uses
+  frmEditor, ZPlatform;
 
 {$R *.dfm}
 

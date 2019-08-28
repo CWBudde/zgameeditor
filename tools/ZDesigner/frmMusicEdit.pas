@@ -3,9 +3,10 @@ unit frmMusicEdit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, frmCompEditBase, Vcl.StdCtrls,ZClasses,AudioComponents, Vcl.ExtCtrls, DesignerGUI,
-  Vcl.ComCtrls, Vcl.CheckLst;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.CheckLst, frmCompEditBase, ZClasses,
+  AudioComponents, DesignerGUI;
 
 type
   TMusicEditFrame = class(TCompEditFrameBase)
@@ -13,24 +14,20 @@ type
     Memo1: TMemo;
     procedure PlayButtonClick(Sender: TObject);
   private
-    { Private declarations }
     Music : TMusic;
     IsPlaying : boolean;
 //    Thread : TThread;
   public
-    { Public declarations }
     procedure SetComponent(C : TZComponent; TreeNode : TZComponentTreeNode); override;
     procedure OnEditorClose; override;
   end;
-
-var
-  MusicEditFrame: TMusicEditFrame;
 
 implementation
 
 {$R *.dfm}
 
-uses AudioPlayer,ZPlatform;
+uses
+  AudioPlayer, ZPlatform;
 
 type
   TPlaybackThread = class(TThread)

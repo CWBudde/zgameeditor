@@ -44,7 +44,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Math, dmCommon, SynHighlighterGLSL, SynEditSearch;
+  System.Math, dmCommon, SynHighlighterGLSL, SynEditSearch;
 
 procedure TShaderPropEditForm.FormCreate(Sender: TObject);
 begin
@@ -84,7 +84,9 @@ end;
 
 type
   TGLSLType = (gtVoid, gtBool, gtInt, gtFloat, gtVec2, gtVec3, gtVec4,
-    gtGenType, gtMat2, gtMat3, gtMat4, gtMat2x2, gtMat2x3, gtMat2x4,
+    gtGenType, gtIVec2, gtIVec3, gtIVec4, gtGenIType,
+    gtBVec2, gtBVec3, gtBVec4, gtGenBType,
+    gtMat2, gtMat3, gtMat4, gtMat2x2, gtMat2x3, gtMat2x4,
     gtMat3x2, gtMat3x3, gtMat3x4, gtMat4x2, gtMat4x3, gtMat4x4);
 
   TArgument = record
@@ -109,6 +111,18 @@ begin
       Result := 'vec3';
     gtVec4:
       Result := 'vec4';
+    gtIVec2:
+      Result := 'ivec2';
+    gtIVec3:
+      Result := 'ivec3';
+    gtIVec4:
+      Result := 'ivec4';
+    gtBVec2:
+      Result := 'bvec2';
+    gtBVec3:
+      Result := 'bvec3';
+    gtBVec4:
+      Result := 'bvec4';
     gtMat2:
       Result := 'mat2';
     gtMat3:
@@ -306,8 +320,9 @@ begin
     ]);
 
     AddBasicInternalFunctions(['abs', 'sqrt', 'invertsqrt', 'ceil', 'floor',
-      'round', 'fract', 'sign', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp',
-      'exp2', 'log', 'log2', 'radians', 'normalize']);
+      'round', 'roundEven', 'trunc', 'fract', 'sign', 'sin', 'cos', 'tan',
+      'asin', 'acos', 'atan', 'exp', 'exp2', 'log', 'log2',
+      'radians', 'degrees', 'normalize']);
     AddInternalFunctionEx('dot', gtFloat,
       [Argument(gtGenType, 'x'), Argument(gtGenType, 'y')]);
     AddInternalFunctionEx('clamp', gtGenType,
@@ -344,6 +359,8 @@ begin
     AddInternalFunctionEx('length', gtFloat, [Argument(gtGenType, 'x')]);
 
     AddInternalFunctionEx('barrier', gtVoid, []);
+    AddInternalFunctionEx('EmitVertex', gtVoid, []);
+    AddInternalFunctionEx('EndPrimitive', gtVoid, []);
 
     AddInternalFunctionEx('interpolateAtSample', gtGenType, [Argument(gtGenType, 'interpolant'), Argument(gtInt, 'sample')]);
     AddInternalFunctionEx('interpolateAtOffset', gtGenType, [Argument(gtGenType, 'interpolant'), Argument(gtVec2, 'offset')]);
@@ -375,6 +392,8 @@ begin
     AddInternalFunctionEx('outerProduct', gtMat3x4, [Argument(gtVec4, 'c'), Argument(gtVec3, 'r')]);
     AddInternalFunctionEx('outerProduct', gtMat4x3, [Argument(gtVec3, 'c'), Argument(gtVec4, 'r')]);
 
+    AddInternalFunctionEx('faceforward', gtGenType,
+      [Argument(gtGenType, 'N'), Argument(gtGenType, 'I'), Argument(gtGenType, 'Nref')]);
     AddInternalFunctionEx('reflect', gtGenType,
       [Argument(gtGenType, 'I'), Argument(gtGenType, 'N')]);
     AddInternalFunctionEx('refract', gtGenType,
@@ -382,7 +401,8 @@ begin
 
     if false {GLSL >= 3.0)} then
       AddBasicInternalFunctions(['sinh', 'cosh', 'tanh', 'asinh', 'acosh',
-        'atanh', 'dfdx', 'dfdy', 'fwidth']);
+        'atanh', 'dFdx', 'dFdy', 'dFdxCoarse', 'dFdyCoarse',
+        'dFdxFine', 'dFdyFine', 'fwidth', 'fwidthCoarse', 'fwidthFine']);
 
     InAdd(['all', 'allinvocations', 'allinvocationsequal', 'any', 'anyinvocation',
       'atomicadd', 'atomicand', 'atomiccompswap', 'atomiccounter',
@@ -392,14 +412,13 @@ begin
       'atomiccounteror', 'atomiccountersubtract', 'atomiccounterxor',
       'atomicexchange', 'atomicmax', 'atomicmin', 'atomicor', 'atomicxor',
       'bitcount', 'bitfieldextract', 'bitfieldinsert',
-      'bitfieldreverse', 'degrees', 'dfdxcoarse', 'dfdxfine', 'dfdycoarse',
-      'dfdyfine', 'emitstreamvertex', 'emitvertex', 'endprimitive',
-      'endstreamprimitive', 'equal', 'faceforward', 'findlsb', 'findmsb',
-      'ftransform', 'fwidthcoarse', 'fwidthfine', 'greaterthan',
-      'greaterthanequal', 'groupmemorybarrier', 'imageatomicadd', 'imageatomicand',
-      'imageatomiccompswap', 'imageatomicexchange', 'imageatomicmax',
-      'imageatomicmin', 'imageatomicor', 'imageatomicxor', 'imageload',
-      'imagesamples', 'imagesize', 'imagestore', 'imulextended',
+      'bitfieldreverse', 'degrees', 'emitstreamvertex', 'endstreamprimitive',
+      'equal', 'findlsb', 'findmsb', 'ftransform', 'greaterthan',
+      'greaterthanequal', 'groupmemorybarrier',
+      'imageatomicadd', 'imageatomicand', 'imageatomiccompswap',
+      'imageatomicexchange', 'imageatomicmax', 'imageatomicmin',
+      'imageatomicor', 'imageatomicxor', 'imageload', 'imagesamples',
+      'imagesize', 'imagestore', 'imulextended',
       'lessthan', 'lessthanequal', 'matrixcompmult',
       'memorybarrier', 'memorybarrieratomiccounter', 'memorybarrierbuffer',
       'memorybarrierimage', 'memorybarriershared', 'noise1', 'noise2', 'noise3',

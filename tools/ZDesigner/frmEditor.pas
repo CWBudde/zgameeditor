@@ -2890,6 +2890,8 @@ begin
 end;
 
 procedure TEditorForm.AboutActionExecute(Sender: TObject);
+var
+  AboutForm: TAboutForm;
 begin
   AboutForm := TAboutForm.Create(Self);
   try

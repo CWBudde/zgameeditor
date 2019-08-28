@@ -3,16 +3,14 @@ unit frmCustomPropEditBase;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, DesignerGUI, ZClasses;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  DesignerGUI, ZClasses;
 
 type
   TCustomPropEditBaseForm = class(TForm)
     DetachButton: TButton;
-  private
-    { Private declarations }
   public
-    { Public declarations }
     TreeNode : TZComponentTreeNode;
     Component : TZComponent;
     Prop : TZProperty;

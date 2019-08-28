@@ -3,9 +3,9 @@ unit frmSpriteSheetEdit;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, frmScriptedCompEditBase, Vcl.ExtCtrls, ZExpressions,
-  Renderer, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
+  Vcl.StdCtrls, frmScriptedCompEditBase, ZExpressions, Renderer;
 
 type
   TSpriteSheetEditFrame = class(TScriptedCompEditFrameBase)
@@ -13,7 +13,6 @@ type
     OpenJsonDialog: TOpenDialog;
     procedure ImportButtonClick(Sender: TObject);
   private
-    { Private declarations }
     SpritesArray : TDefineArray;
     MaterialTexture : TMaterialTexture;
     Sheet : TSpriteSheet;
@@ -25,7 +24,6 @@ type
     procedure BindData; override;
     procedure UpdateData; override;
   public
-    { Public declarations }
     constructor Create(AOwner: TComponent) ; override;
   end;
 
@@ -33,7 +31,8 @@ implementation
 
 {$R *.dfm}
 
-uses frmEditor, System.JSON, IOUtils;
+uses
+  System.JSON, IOUtils, frmEditor;
 
 { TSpriteSheetEditFrame }
 

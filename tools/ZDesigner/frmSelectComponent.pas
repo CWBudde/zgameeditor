@@ -3,8 +3,9 @@ unit frmSelectComponent;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.ComCtrls, ZClasses, Vcl.StdCtrls;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
+  Vcl.StdCtrls, ZClasses;
 
 type
   TSelectComponentForm = class(TForm)
@@ -22,10 +23,8 @@ type
     procedure CompListViewInfoTip(Sender: TObject; Item: TListItem;
       var InfoTip: string);
   private
-    { Private declarations }
     EnabledList : array of boolean;
   public
-    { Public declarations }
     function GetSelectedClass : TZComponentInfo;
     procedure FilterBy(ParentComps, ParentLists : TStringList; const Prop : TZProperty);
   end;
@@ -35,7 +34,8 @@ var
 
 implementation
 
-uses dmCommon,uHelp,CommCtrl, Vcl.Styles, Vcl.Themes, Math;
+uses
+  System.Math, WinApi.CommCtrl, Vcl.Styles, Vcl.Themes, dmCommon, uHelp;
 
 {$R *.dfm}
 

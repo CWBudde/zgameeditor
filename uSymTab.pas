@@ -22,7 +22,8 @@ unit uSymTab;
 
 interface
 
-uses Classes,Contnrs,ZLog, Generics.Collections;
+uses
+  Classes, Contnrs, ZLog, Generics.Collections;
 
 type
   {$ifndef fpc}
@@ -61,7 +62,8 @@ type
 
 implementation
 
-uses SysUtils;
+uses
+  SysUtils;
 
 { TSymbolTable }
 

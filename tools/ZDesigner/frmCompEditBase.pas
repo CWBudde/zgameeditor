@@ -3,8 +3,8 @@ unit frmCompEditBase;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, ZClasses, DesignerGUI;
+  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
+  Vcl.Dialogs, Vcl.StdCtrls, ZClasses, DesignerGUI;
 
 type
   TCompEditFrameBaseType = class of TCompEditFrameBase;
@@ -13,7 +13,6 @@ type
     procedure RefreshTreeNode;
     procedure SetProjectChanged;
   public
-    { Public declarations }
     Component : TZComponent;
     TreeNode : TZComponentTreeNode;
     NeedRefreshTreeNode : boolean;
@@ -26,7 +25,8 @@ type
 
 implementation
 
-uses frmEditor;
+uses
+  frmEditor;
 
 {$R *.dfm}
 

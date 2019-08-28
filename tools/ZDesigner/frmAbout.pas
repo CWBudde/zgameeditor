@@ -23,8 +23,9 @@ unit frmAbout;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, GLPanel, ZExpressions;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ExtCtrls, GLPanel, ZExpressions;
 
 type
   TAboutForm = class(TForm)
@@ -33,20 +34,15 @@ type
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   private
-    { Private declarations }
     Glp : TGLPanelZGE;
     Clicked : TDefineVariable;
     procedure OnUpdateData(Sender: TObject);
-  public
-    { Public declarations }
   end;
-
-var
-  AboutForm: TAboutForm;
 
 implementation
 
-uses frmEditor, uHelp, Renderer;
+uses
+  uHelp, Renderer, frmEditor;
 
 {$R *.dfm}
 

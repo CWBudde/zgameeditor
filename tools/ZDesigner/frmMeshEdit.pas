@@ -3,9 +3,10 @@ unit frmMeshEdit;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  Vcl.Dialogs, frmCompEditBase, Vcl.ExtCtrls, ZClasses,DesignerGui, Contnrs, Meshes,
-  Vcl.Menus, Vcl.StdCtrls,GlPanel;
+  WinApi.Windows, WinApi.Messages, System.SysUtils, System.Classes,
+  System.Contnrs, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ExtCtrls, Vcl.Menus, Vcl.StdCtrls, frmCompEditBase, ZClasses,
+  DesignerGui, Meshes, GlPanel;
 
 type
   TMeshEditFrame = class(TCompEditFrameBase)
@@ -39,7 +40,6 @@ type
     procedure SaveMeshToFileButtonClick(Sender: TObject);
     procedure WireframeCheckBoxClick(Sender: TObject);
   private
-    { Private declarations }
     Nodes : TObjectList;
     Mesh : TMesh;
     IsMeshConnected : boolean;
@@ -68,7 +68,6 @@ type
     procedure OnGLPanelMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   public
-    { Public declarations }
     constructor Create(AOwner: TComponent) ; override;
     destructor Destroy; override;
     procedure SetComponent(C : TZComponent; TreeNode : TZComponentTreeNode); override;
@@ -77,13 +76,11 @@ type
     procedure OnEditorClose; override;
   end;
 
-var
-  BitmapEditFrame: TMeshEditFrame;
-
 implementation
 
-uses Math, SugiyamaLayout, ZLog, frmEditor, Renderer, u3dsFile, System.Types,
-  OpenGL12,ZOpenGL;
+uses
+  System.Math, System.Types,SugiyamaLayout, ZLog, frmEditor, Renderer, u3dsFile,
+  OpenGL12, ZOpenGL;
 
 {$R *.dfm}
 

@@ -3,8 +3,8 @@ unit frmChannelFrame;
 interface
 
 uses 
-  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ComCtrls, AudioPlayer, Vcl.StdCtrls;
+  Windows, Messages, SysUtils, Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
+  Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, AudioPlayer;
 
 type
   TChannelFrame = class(TFrame)
@@ -18,10 +18,8 @@ type
     procedure DelayActiveCheckBoxClick(Sender: TObject);
     procedure DelayLengthTrackBarChange(Sender: TObject);
   private
-    { Private declarations }
     Channel : PChannel;
   public
-    { Public declarations }
     procedure SetChannel(C : PChannel);
   end;
 

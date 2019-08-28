@@ -23,8 +23,9 @@ unit dmCommon;
 interface
 
 uses
-  SysUtils, Classes, Vcl.ImgList, Vcl.Controls, Vcl.Menus, Vcl.ActnList, Vcl.XPStyleActnCtrls,
-  Vcl.ActnMan, Vcl.StdActns, Vcl.Dialogs, System.Actions, System.ImageList;
+  System.SysUtils, System.Classes, System.Actions, System.ImageList,
+  Vcl.ImgList, Vcl.Controls, Vcl.Menus, Vcl.ActnList, Vcl.XPStyleActnCtrls,
+  Vcl.ActnMan, Vcl.StdActns, Vcl.Dialogs;
 
 type
   TCommonModule = class(TDataModule)
