@@ -2158,10 +2158,13 @@ begin
     for I := 0 to L.Count-1 do
     begin
       C := TZComponent(L[I]);
-      if (C is TContent) or
-        (C is TShader) or
-        (C is TMaterial) or
-        ((C is TDefineVariableBase) and not (C is TDefineConstant))then
+
+      if (Length(C.Name)>0)
+        and (not (C is TDefineConstant))
+        and (not (C is TCommand))
+        and (not (C is TZApplication))
+        and (not (C is TLogicalGroup))
+      then
       begin
         if not Counts.ContainsKey(C) then
           Counts.Add(C,0);
@@ -2177,9 +2180,7 @@ begin
               Value := C.GetProperty(Prop);
               if Value.ComponentValue=nil then
                 Continue;
-              if not Counts.ContainsKey(Value.ComponentValue) then
-                Counts.Add(Value.ComponentValue,0);
-              Counts[Value.ComponentValue] := Counts[Value.ComponentValue]+1;
+              Counts.AddOrSetValue(Value.ComponentValue,1);
             end;
         end;
       end;
@@ -2188,7 +2189,7 @@ begin
     S := '';
     for C in Counts.Keys do
     begin
-      if Counts[C]=0 then
+      if (Counts[C]=0) and (not HasReferers(Root,C)) then
       begin
         if S='' then
           S := string(C.Name)
@@ -4219,8 +4220,17 @@ begin
   end
   else
     Desc := S;
-  C.ItemList.Add(Desc);
+  C.ItemList.AddObject(Desc,TObject(PChar(Ins)));
   C.InsertList.Add(Ins);
+end;
+
+function AutoCompSort(List: TStringList; Index1, Index2: Integer): Integer;
+var
+  P1, P2 : PChar;
+begin
+  P1 := PChar(List.Objects[Index1]);
+  P2 := PChar(List.Objects[Index2]);
+  Result := CompareText( String(P1), String(P2) );
 end;
 
 procedure TEditorForm.AutoCompOnExecute(Kind: SynCompletionType;
@@ -4241,7 +4251,7 @@ var
     for S in Items do
     begin
       Comp.InsertList.Add(S);
-      Comp.ItemList.Add(S);
+      Comp.ItemList.AddObject(S,TObject(PChar(S)));
     end;
   end;
 
@@ -4346,8 +4356,8 @@ begin
     ZApp.SymTab.Iterate(AutoCompAddOne, Comp);
     InAdd(['CurrentModel','this','string','int','float','while','for','vec2','vec3','vec4','mat4']);
   end;
-  (Comp.ItemList as TStringList).Sort;
   (Comp.InsertList as TStringList).Sort;
+  (Comp.ItemList as TStringList).CustomSort(AutoCompSort);
 end;
 
 procedure TEditorForm.ParamAutoCompOnExecute(Kind: SynCompletionType;
